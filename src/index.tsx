@@ -3,10 +3,14 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import {LocationPins} from './data/LocationPins'
+
+
+
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <App PinList={LocationPins} />
   </React.StrictMode>,
   document.getElementById('root')
 );

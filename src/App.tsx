@@ -1,26 +1,44 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import './styles/App.css';
+import Map from './components/Map';
+import HouseForm from './components/HouseForm';
+import {LocationList, Pin} from './types';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+
+ 
+interface IAppState {
+    PinList: LocationList
 }
 
+interface IAppProps {
+  PinList: LocationList
+}
+
+class App extends React.Component<IAppState> {
+
+  state: IAppState;
+
+  constructor(props: IAppProps) {
+    super(props);
+    this.state = {PinList: props.PinList}
+    this.AddPin = this.AddPin.bind(this);
+  };
+
+  AddPin(house: Pin) {
+    this.setState({
+      PinList: [...this.state.PinList, house]
+  })
+  }
+
+  render() {
+    return (
+      <div className="App">
+          <HouseForm Pins={this.state.PinList} onPinChange={this.AddPin} PinsLength={this.state.PinList.length}></HouseForm>
+          <Map Pins={this.state.PinList} location={this.state.PinList[0]} zoomLevel={12}></Map>
+      </div>
+    );
+  }
+}
+ 
 export default App;
+ 
